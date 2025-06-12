@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cadastre-se - PsiCare</title>
+  <link rel="website icon" href="../Imagens/Logo-PsiCare.png">
+  <link rel="stylesheet" href="../styles.css"/>
+  <link rel="stylesheet" href="../cadastro.css"/> 
+</head>
+
+<body>
+  <div class="cadastro-container">
+    <a href="../index.html">
+      <img src="../Imagens/Logo-PsiCare.png" alt="Logo-PsiCare" class="Logo-PsiCare">
+    </a>
+
+    <div class="titulo">
+      <h1>PsiCare</h1>
+      <h3>Crie sua conta:</h3>
+    </div>
+
+    <form>
+      <div class="formCadastro">
+        <input type="text" class="form-control" placeholder="Nome completo:">
+        <input type="email" class="form-control" placeholder="E-mail:">
+        <input type="password" class="form-control" placeholder="Digite sua senha:">
+        <input type="password" class="form-control" placeholder="Confirme sua senha:">
+      </div>
+      <div class="botao-container">
+        <button type="submit" class="BotaoVerde">Registrar</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.querySelector("form");
+    const inputs = form.querySelectorAll(".form-control");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const nome = inputs[0].value.trim();
+      const email = inputs[1].value.trim();
+      const senha = inputs[2].value;
+      const confirmarSenha = inputs[3].value;
+
+      if (!nome || !email || !senha || !confirmarSenha) {
+        alert("Por favor, preencha todos os campos.");
+        return;
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        alert("E-mail inválido.");
+        return;
+      }
+
+      if (senha.length < 6) {
+        alert("A senha deve ter pelo menos 6 caracteres.");
+        return;
+      }
+
+      if (senha !== confirmarSenha) {
+        alert("As senhas não coincidem.");
+        return;
+      }
+
+      window.location.href = "./descricao.html";
+    });
+  });
+</script>
+
+</body>
+</html>
