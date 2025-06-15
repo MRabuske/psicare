@@ -10,4 +10,3 @@ npx prisma db push
 
 node: node --watch server.js
 
-O Banco de Dados funciona Localmente mas precisa ser configurado
