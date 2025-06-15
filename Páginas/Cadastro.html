@@ -38,7 +38,7 @@
     const form = document.querySelector("form");
     const inputs = form.querySelectorAll(".form-control");
 
-    form.addEventListener("submit", function (e) {
+    form.addEventListener("submit", async function (e) {
       e.preventDefault();
 
       const nome = inputs[0].value.trim();
@@ -67,7 +67,28 @@
         return;
       }
 
-      window.location.href = "./descricao.html";
+      try {
+        const response = await fetch('http://localhost:3000/cadastro', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: nome,
+            email: email,
+            password: senha
+          })
+        });
+
+        if (!response.ok) {
+          const data = await response.json();
+          alert(data.message || "Erro ao registrar.");
+          return;
+        }
+
+        alert("Cadastro realizado com sucesso!");
+        window.location.href = "./Entrar.html";
+      } catch (err) {
+        alert("Erro de conexão com o servidor.");
+      }
     });
   });
 </script>

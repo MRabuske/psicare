@@ -42,5 +42,46 @@
   </div>
 
   <script src="../script.js"></script>
+  <script>
+    async function salvar() {
+      const descricao = descricaoInput.value.trim();
+      if (!humorSelecionado || !descricao) {
+        alert("Selecione um humor e escreva uma descrição.");
+        return;
+      }
+
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("Você precisa estar logado.");
+        window.location.href = "./Entrar.html";
+        return;
+      }
+
+      try {
+        const response = await fetch("http://localhost:3000/emocao", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            mood: humorSelecionado,
+            description: descricao
+          })
+        });
+
+        if (!response.ok) {
+          const data = await response.json();
+          alert(data.message || "Erro ao salvar emoção.");
+          return;
+        }
+
+        alert("Registro salvo com sucesso!");
+        window.location.href = "./historico.html";
+      } catch (err) {
+        alert("Erro de conexão com o servidor.");
+      }
+    }
+  </script>
 </body>
 </html>
