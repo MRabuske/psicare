@@ -9,4 +9,3 @@ npx prisma generate sempre que alterar o schema.prisma
 npx prisma db push
 
 node: node --watch server.js
-
