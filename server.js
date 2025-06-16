@@ -12,3 +12,8 @@ app.use('/', auth, privateRoutes)
 
 app.listen(3000, () => console.log("Servidor rodando :)"))
 
+//ajsute teste
+
+app.use(express.json());
+app.use(express.static('.')); // serve arquivos estáticos como index.html
+app.use('/', publicRoutes);

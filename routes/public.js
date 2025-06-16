@@ -67,6 +67,28 @@ router.post('/login', async (req, res) => {
         console.error('Erro no login:', err);
         res.status(500).json({ message: 'Erro no servidor' });
     }
-})
+})//emoções
 
+// POST /emocao - salva um novo registro
+router.post('/emocao', async (req, res) => {
+  try {
+    const { data, humor, descricao } = req.body;
+    const novaEmocao = await Emotion.create({ data, humor, descricao });
+    res.status(201).json(novaEmocao);
+  } catch (err) {
+    res.status(500).json({ erro: 'Erro ao salvar emoção', detalhes: err.message });
+  }
+});
+
+// GET /emocoes - retorna todos os registros
+router.get('/emocoes', async (req, res) => {
+  try {
+    const emocoes = await Emotion.findAll();
+    res.json(emocoes);
+  } catch (err) {
+    res.status(500).json({ erro: 'Erro ao buscar emoções', detalhes: err.message });
+  }
+});
+
+//fim emoções
 export default router

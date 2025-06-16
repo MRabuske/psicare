@@ -34,8 +34,9 @@ function limpar() {
   emojis.forEach(e => e.classList.remove("selected"));
   humorSelecionado = "";
 }
+//atualização da função salvar
 
-function salvar() {
+async function salvar() {
   const descricao = descricaoInput.value.trim();
   if (!humorSelecionado || !descricao) {
     alert("Selecione um humor e escreva uma descrição.");
@@ -48,6 +49,24 @@ function salvar() {
     descricao: descricao
   };
 
-  localStorage.setItem("registroPsiCare", JSON.stringify(registro));
-  window.location.href = "./historico.html";
+  try {
+    const resposta = await fetch("http://localhost:3000/emocao", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(registro)
+    });
+
+    if (resposta.ok) {
+      alert("Registro salvo com sucesso!");
+      window.location.href = "./historico.html"; // ou o que for adequado
+    } else {
+      const erro = await resposta.json();
+      alert("Erro ao salvar: " + erro.erro);
+    }
+  } catch (e) {
+    alert("Erro de conexão com o servidor.");
+    console.error(e);
+  }
 }
